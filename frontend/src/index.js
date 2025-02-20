@@ -1,3 +1,8 @@
+window.go.main.App.GetMarkdown().then(data => {
+  document.getElementById("getm").value = data
+  Preview.Update()
+})
+
 MathJax.Hub.Config({
   skipStartupTypeset: true,
   showProcessingMessages: false,
