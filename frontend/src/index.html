@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/dracula.min.css" />
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/asvd/syncscroll/syncscroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   </head>
   <body>
     <main role="main" class="container">
@@ -43,16 +46,14 @@
             <span>
               <label class="file" for="file">
                 Open
-                <input
-                  id="file"
-                  type="file"
-                  accept=".txt,.text,.md,.markdown,.markdn,.mdown,.htm,.html,.svg"
-                  onchange="openFile(event)"
-                />
+                <input id="file" type="file" accept=".txt,.md,.html,.svg" onchange="openFile(event)"/>
               </label>
             </span>
             <button type="button" onclick="download();" id="save" disabled>
               Save
+            </button>
+            <button type="button" onclick="savePDF();" id="savePDF" disabled>
+              PDF
             </button>
             🌗
             <label class="theme-switch" for="checkbox" title="Night mode">
@@ -98,28 +99,6 @@
           </div>
         </div>
       </footer>
-      <div class="modal">
-        <div class="modal-content">
-          <span class="close-button">✖</span>
-          <h1>Marcdown</h1>
-          <h3>
-            👻 Lightweight markdown viewer and editor by
-            <a href="https://github.com/liyasthomas">Liyas Thomas</a>
-          </h3>
-          <h3>
-            <a href="https://github.com/liyasthomas/marcdown" target="_blank"
-              ><img
-                src="icons/github.svg"
-                style="margin-right: 8px;"
-                alt="GitHub"
-              />GitHub</a
-            >
-            <button id="installPWA" onclick="installPWA()">
-              <img src="icons/pwalogo.svg" alt="PWA" style="height: 16px;" />
-            </button>
-          </h3>
-        </div>
-      </div>
     </main>
     <script src="index.js"></script>
   </body>

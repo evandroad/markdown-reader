@@ -41,6 +41,7 @@ const Preview = {
     this.wordcount = document.getElementById("wordcount");
     this.charcount = document.getElementById("charcount");
     this.save = document.getElementById("save");
+    this.savePDF = document.getElementById("savePDF");
   },
   SwapBuffers() {
     let buffer = this.preview;
@@ -82,10 +83,12 @@ const Preview = {
       this.wordcount.innerHTML = `${wordCount} words`;
       this.charcount.innerHTML = `${charCount} chars`;
       this.save.disabled = false;
+      this.savePDF.disabled = false;
     } else {
       this.wordcount.innerHTML = "0 words";
       this.charcount.innerHTML = "0 chars";
       this.save.disabled = true;
+      this.savePDF.disabled = true;
     }
     mouseUp();
   },
@@ -205,8 +208,9 @@ const download = () => {
   let blob = new Blob([text], {
     type: "text/plain",
   });
+  console.log(blob);
   let anchor = document.createElement("a");
-  anchor.download = "marcdown.md";
+  anchor.download = "markdown.md";
   anchor.href = window.URL.createObjectURL(blob);
   anchor.target = "_blank";
   anchor.style.display = "none";
@@ -224,6 +228,25 @@ const openFile = ({ target }) => {
   };
   reader.readAsText(input.files[0]);
 };
+const savePDF = () => {
+  const { jsPDF } = window.jspdf;
+  const markdownText = document.getElementById("markdownInput").value;
+  const outputDiv = document.getElementById("output");
+
+  // Converte Markdown para HTML
+  outputDiv.innerHTML = marked.parse(markdownText);
+
+  // Usa html2canvas para capturar a div formatada
+  html2canvas(outputDiv).then(canvas => {
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgWidth = 190; // Largura da imagem no PDF
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+    pdf.save("documento.pdf");
+  });
+}
 const handleFileSelect = (evt) => {
   evt.stopPropagation();
   evt.preventDefault();
